@@ -329,6 +329,19 @@ void cmdCallback(const ros::TimerEvent &e)
     publish_cmd(pos, vel, acc, jer, yaw_yawdot.first, yaw_yawdot.second);
   }
 #endif
+  else if (t_cur >= traj_duration_)
+  {
+    /* hold the final position and yaw after the trajectory ends */
+    pos = traj_->getPos(traj_duration_);
+    vel.setZero();
+    acc.setZero();
+    jer.setZero();
+
+    yaw_yawdot.first = last_yaw_;
+    yaw_yawdot.second = 0.0;
+
+    publish_cmd(pos, vel, acc, jer, yaw_yawdot.first, yaw_yawdot.second);
+  }
 }
 
 int main(int argc, char **argv)
