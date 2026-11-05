@@ -37,12 +37,15 @@
     <arg name="point4_z"/>
     <arg name="flight_type"/>
     <arg name="drone_id"/>
+    <arg name="goal_topic" default="/goal"/>
+    <arg name="mondify_final_goal" default="true"/>
     <arg name="init_x"/>
 	<arg name="init_y"/>
 	<arg name="init_z"/>
     <!-- main node -->
     <!-- <node pkg="diff_planner" name="diff_planner_node" type="diff_planner_node" output="screen" launch-prefix="valgrind"> -->
     <node pkg="diff_planner" name="drone_$(arg drone_id)_diff_planner_node" type="diff_planner_node" output="screen">
+        <remap from="/goal" to="$(arg goal_topic)"/>
         <remap from="~odom_world" to="$(arg odom_topic)"/>
         <remap from="~mandatory_stop" to="/mandatory_stop_to_planner"/>
         <remap from="~planning/trajectory" to = "/drone_$(arg drone_id)_planning/trajectory"/>
@@ -63,7 +66,7 @@
         <param name="fsm/realworld_experiment" value="true"/>
         <param name="fsm/fail_safe" value="true"/>
         <!-- Allow final goal modification -->
-        <param name="fsm/mondify_final_goal" value="true"/>
+        <param name="fsm/mondify_final_goal" value="$(arg mondify_final_goal)"/>
         <!-- Enable stuck detection mechanism to handle deadlock situations -->
         <param name="fsm/enable_stuck_detect" value="true"/>
         <param name="fsm/waypoint_num" value="$(arg point_num)" type="int"/>

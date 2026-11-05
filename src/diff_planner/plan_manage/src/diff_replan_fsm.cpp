@@ -1,6 +1,8 @@
 
 #include <plan_manage/diff_replan_fsm.h>
 
+#include <std_msgs/String.h>
+
 namespace diff_planner
 {
 
@@ -12,6 +14,7 @@ namespace diff_planner
     have_recv_pre_agent_ = false;
     flag_escape_emergency_ = true;
     mandatory_stop_ = false;
+    has_goal_history_ = false;
 
     /*  fsm param  */
     nh.param("fsm/flight_type", target_type_, -1);
@@ -66,6 +69,7 @@ namespace diff_planner
     data_disp_pub_ = nh.advertise<traj_utils::DataDisp>("planning/data_display", 100);
     heartbeat_pub_ = nh.advertise<std_msgs::Empty>("planning/heartbeat", 10);
     ground_height_pub_ = nh.advertise<std_msgs::Float64>("/ground_height_measurement", 10);
+    fsm_state_pub_ = nh.advertise<std_msgs::String>("/planner/fsm_state", 10);
 
     if (target_type_ == TARGET_TYPE::MANUAL_TARGET)
     {
@@ -94,6 +98,13 @@ namespace diff_planner
     exec_timer_.stop(); // To avoid blockage
     std_msgs::Empty heartbeat_msg;
     heartbeat_pub_.publish(heartbeat_msg);
+
+    static int fsm_state_pub_counter = 0;
+    if (++fsm_state_pub_counter >= 10)
+    {
+      fsm_state_pub_counter = 0;
+      publishFSMState();
+    }
 
     static int fsm_num = 0;
     fsm_num++;
@@ -412,6 +423,28 @@ namespace diff_planner
     cout << endl;
   }
 
+  void DiffReplanFSM::publishFSMState()
+  {
+    std_msgs::String msg;
+    if (exec_state_ == EMERGENCY_STOP)
+    {
+      msg.data = "FAIL";
+    }
+    else if (have_target_)
+    {
+      msg.data = "EXECING";
+    }
+    else if (exec_state_ == WAIT_TARGET && has_goal_history_)
+    {
+      msg.data = "FINISH";
+    }
+    else
+    {
+      msg.data = "INIT";
+    }
+    fsm_state_pub_.publish(msg);
+  }
+
   std::pair<int, DiffReplanFSM::FSM_EXEC_STATE> DiffReplanFSM::timesOfConsecutiveStateCalls()
   {
     return std::pair<int, FSM_EXEC_STATE>(continously_called_times_, exec_state_);
@@ -653,6 +686,7 @@ namespace diff_planner
       }
       have_target_ = true;
       have_new_target_ = true;
+      has_goal_history_ = true;
       /*** FSM ***/
       if (exec_state_ != WAIT_TARGET && flag_2replan && exec_state_ != EMERGENCY_STOP)
       {
@@ -728,6 +762,25 @@ namespace diff_planner
   void DiffReplanFSM::waypointCallback(const geometry_msgs::PoseStampedPtr &msg)
   {
     Eigen::Vector3d end_wp(msg->pose.position.x, msg->pose.position.y, msg->pose.position.z);
+
+    if (mandatory_stop_ || exec_state_ == EMERGENCY_STOP)
+    {
+      mandatory_stop_ = false;
+      enable_fail_safe_ = true;
+      need_hover_stop_ = false;
+      flag_escape_emergency_ = true;
+      have_target_ = false;
+      have_trigger_ = false;
+      changeFSMExecState(WAIT_TARGET, "Clear Mandatory Stop");
+      ROS_INFO("Mandatory stop cleared by new goal.");
+    }
+
+    if (have_target_ && have_trigger_ && (end_wp - final_goal_).norm() < 0.05)
+    {
+      ROS_INFO("Ignore duplicate goal: %f, %f, %f", end_wp(0), end_wp(1), end_wp(2));
+      return;
+    }
+
     if (planner_manager_->grid_map_->getInflateOccupancy(end_wp) == -1)
     {
       ROS_WARN("The goal is outside the safe fence, ignore this goal!");
