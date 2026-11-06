@@ -77,8 +77,31 @@
         <remap from="position_cmd" to="drone_$(arg drone_id)_planning/pos_cmd"/>
         <remap from="~planning/trajectory" to="/drone_$(arg drone_id)_planning/trajectory"/>
         <remap from="~heartbeat" to="/drone_$(arg drone_id)_traj_server/heartbeat"/>
+        <remap from="~odom" to="$(arg odom_topic)"/>
         <param name="traj_server/time_forward" value="1.0" type="double"/>
         <param name="traj_server/yaw_dot_max" value="3.14" type="double"/>
         <param name="traj_server/yaw_dot_dot_max" value="15.71" type="double"/>
+        <!-- FOV 可视化：与 uss-nav perception_utils 的默认值一致 -->
+        <param name="traj_server/fov_top_angle" value="0.6" type="double"/>
+        <param name="traj_server/fov_left_angle" value="0.76" type="double"/>
+        <param name="traj_server/fov_right_angle" value="0.76" type="double"/>
+        <param name="traj_server/fov_vis_dist" value="1.0" type="double"/>
+        <!-- 速度着色轨迹：min_speed 蓝 -> max_speed 红 -->
+        <param name="traj_server/traj_min_speed" value="0.0" type="double"/>
+        <param name="traj_server/traj_max_speed" value="1.5" type="double"/>
+        <param name="traj_server/traj_distance_threshold" value="0.1" type="double"/>
+    </node>
+
+    <!-- 历史轨迹：内置仿真时 simulator.xml 已启动同名节点，这里只为外部仿真器补上。 -->
+    <node pkg="odom_visualization" name="drone_$(arg drone_id)_odom_visualization" type="odom_visualization" output="screen" unless="$(arg use_builtin_sim)">
+        <remap from="~odom" to="$(arg odom_topic)"/>
+        <param name="color/a" value="1.0"/>
+        <param name="color/r" value="0.0"/>
+        <param name="color/g" value="0.0"/>
+        <param name="color/b" value="0.0"/>
+        <param name="covariance_scale" value="100.0"/>
+        <param name="robot_scale" value="0.35"/>
+        <param name="tf45" value="false"/>
+        <param name="drone_id" value="$(arg drone_id)"/>
     </node>
 </launch>
