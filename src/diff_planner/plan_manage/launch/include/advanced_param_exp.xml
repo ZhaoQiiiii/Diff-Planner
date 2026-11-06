@@ -37,7 +37,7 @@
     <arg name="point4_z"/>
     <arg name="flight_type"/>
     <arg name="drone_id"/>
-    <arg name="goal_topic" default="/goal"/>
+    <arg name="goal_topic" default="/diff_agent/goal"/>
     <arg name="mondify_final_goal" default="true"/>
     <arg name="init_x"/>
 	<arg name="init_y"/>

@@ -56,7 +56,7 @@ namespace rviz_plugin_selected_points_publisher
   {
     node_handle_.param("frame_id", tf_frame_, std::string("/base_link"));
     selected_drones_topic_ = std::string("/rviz_selected_drones");
-    goal_topic_ = std::string("/goal");
+    node_handle_.param("goal_topic", goal_topic_, std::string("/goal"));
 
     rviz_selected_publisher_ = node_handle_.advertise<geometry_msgs::PoseStamped>(selected_drones_topic_.c_str(), 100);
     goal_publisher_ = node_handle_.advertise<geometry_msgs::PoseStamped>(goal_topic_.c_str(), 100);
