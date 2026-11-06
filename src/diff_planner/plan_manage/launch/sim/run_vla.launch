@@ -1,0 +1,10 @@
+<launch>
+    <!-- VLA 场景入口：planner 直接订阅 /goal，供 rviz 的 SelectedPointsPublisher 右键选点使用。
+         run_3dgs.launch 默认 goal_topic=/vla/goal，这里覆盖为 /goal。 -->
+    <arg name="use_builtin_sim" default="false"/>
+
+    <include file="$(find diff_planner)/launch/sim/run_3dgs.launch">
+        <arg name="goal_topic" value="/goal"/>
+        <arg name="use_builtin_sim" value="$(arg use_builtin_sim)"/>
+    </include>
+</launch>
