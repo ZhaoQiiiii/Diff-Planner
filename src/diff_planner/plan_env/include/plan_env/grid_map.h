@@ -8,8 +8,13 @@
 #include <iostream>
 #include <random>
 #include <nav_msgs/Odometry.h>
+#include <limits>
+#include <memory>
+#include <mutex>
 #include <queue>
+#include <ros/callback_queue.h>
 #include <ros/ros.h>
+#include <ros/spinner.h>
 #include <tuple>
 #include <visualization_msgs/Marker.h>
 
@@ -46,6 +51,7 @@ struct MappingParameters
   int pose_type_;
   bool enable_virtual_wall_;
   double virtual_ceil_, virtual_ground_;
+  double visual_inflat_map_height_;
   double init_x_, init_y_, init_z_;
 
   /* camera parameters */
@@ -124,6 +130,10 @@ struct MappingData
   bool flag_depth_odom_timeout_;
   bool flag_have_ever_received_depth_;
 
+  // bounding box of the latest cloud update, world frame
+  Eigen::Vector3d update_range_lb3d_, update_range_ub3d_;
+  bool update_range_valid_ = false;
+
   // depth image projected point cloud
 
   vector<Eigen::Vector3d> proj_points_;
@@ -181,6 +191,7 @@ private:
 
   void publishMap();
   void publishMapInflate();
+  void publishUpdateRange();
 
   // get depth image and camera pose
   void depthPoseCallback(const sensor_msgs::ImageConstPtr &img,
@@ -230,8 +241,12 @@ private:
   SynchronizerImageOdom sync_image_odom_;
 
   ros::Subscriber indep_cloud_sub_, indep_odom_sub_, extrinsic_sub_;
-  ros::Publisher map_pub_, map_inf_pub_;
+  ros::Publisher map_pub_, map_inf_pub_, update_range_pub_;
   ros::Timer occ_timer_, vis_timer_, fading_timer_;
+
+  ros::CallbackQueue vis_queue_;
+  std::shared_ptr<ros::AsyncSpinner> vis_spinner_;
+  std::mutex vis_mtx_;
 
   //
   uniform_real_distribution<double> rand_noise_;
