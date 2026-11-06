@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   traj_utils
   traj_opt # for traj2odom_node
   sensor_msgs
+  quadrotor_msgs
 )
 
 catkin_package(
@@ -33,9 +34,10 @@ include_directories(
 add_executable(bridge_node_udp
   src/bridge_node_udp.cpp 
   )
-target_link_libraries(bridge_node_udp 
+target_link_libraries(bridge_node_udp
   ${catkin_LIBRARIES}
   )
+add_dependencies(bridge_node_udp ${catkin_EXPORTED_TARGETS})
 
 if(ENABLE_TCP)
 
@@ -53,8 +55,9 @@ endif(ENABLE_TCP)
 add_executable(traj2odom_node
   src/traj2odom_node.cpp 
   )
-target_link_libraries(traj2odom_node 
+target_link_libraries(traj2odom_node
   ${catkin_LIBRARIES}
   )
+add_dependencies(traj2odom_node ${catkin_EXPORTED_TARGETS})
 
 
