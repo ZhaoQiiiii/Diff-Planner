@@ -74,6 +74,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /drone01
+        - /drone01/SceneGraph1
       Splitter Ratio: 0.5
     Tree Height: 545
 Preferences:
@@ -264,7 +265,7 @@ Visualization Manager:
               Marker Topic: /scene_graph/traj_with_vel
               Name: Traj_Vel
               Namespaces:
-                {}
+                trajectory: true
               Queue Size: 100
               Value: true
           Enabled: true
@@ -372,7 +373,7 @@ Visualization Manager:
               Marker Topic: /drone_0_diff_planner_node/optimal_list
               Name: optimal_traj
               Namespaces:
-                {}
+                "": true
               Queue Size: 100
               Value: true
             - Class: rviz/Marker
@@ -396,7 +397,7 @@ Visualization Manager:
               Marker Topic: /drone_0_diff_planner_node/init_list
               Name: InitTraj
               Namespaces:
-                {}
+                "": true
               Queue Size: 100
               Value: true
             - Class: rviz/Marker
@@ -474,7 +475,7 @@ Visualization Manager:
             - Alpha: 1
               Autocompute Intensity Bounds: true
               Autocompute Value Bounds:
-                Max Value: 5.150000095367432
+                Max Value: 1.9500000476837158
                 Min Value: -0.25
                 Value: true
               Axis: Z
@@ -503,7 +504,8 @@ Visualization Manager:
               Enabled: false
               Marker Topic: /drone_0_diff_planner_node/grid_map/update_range
               Name: Update_Range
-              Namespaces: {}
+              Namespaces:
+                {}
               Queue Size: 100
               Value: false
             - Alpha: 1
@@ -762,168 +764,59 @@ Visualization Manager:
           Name: Mapping
         - Class: rviz/Group
           Displays:
-            - Class: rviz/Marker
-              Enabled: false
-              Marker Topic: /drone_0_ego_planner_node/frontier
-              Name: FC
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: false
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/frontier_info
-              Name: FrotnierInfo
+              Marker Topic: /drone_0_ego_planner_node/skeleton_vis
+              Name: skeletonInfo
               Namespaces:
-                {}
+                edges: true
+                poly_belongs_to_area: true
+                polyhedron_center: true
+                polyhedron_orin_center: true
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/frontier_inx
-              Name: FC_idx
+              Marker Topic: /object_all_vis
+              Name: ObjectAllVis
               Namespaces:
-                {}
+                obb_corners: true
+                obj_edge_all: true
+                obj_label: true
+                obj_position: true
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/fc_cenection
-              Name: FC-connect
+              Marker Topic: /skeleton/cluster_vis
+              Name: SkeletonCluster
               Namespaces:
-                {}
+                clusters_box: true
+                clusters_sphere: true
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/ftr_blacklist
-              Name: FC-blacklist
+              Marker Topic: /scene_graph/vis
+              Name: SceneGraph
               Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/ftr_conn_skel
-              Name: FtrEdge
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/Marker
-              Enabled: false
-              Marker Topic: /drone_0_ego_planner_node/grid_map/update_range
-              Name: Update_Range
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: false
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/hgrid_info
-              Name: HgridInfo
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Alpha: 1
-              Autocompute Intensity Bounds: true
-              Autocompute Value Bounds:
-                Max Value: 10
-                Min Value: -10
-                Value: true
-              Axis: Z
-              Channel Name: intensity
-              Class: rviz/PointCloud2
-              Color: 99; 158; 226
-              Color Transformer: FlatColor
-              Decay Time: 0
-              Enabled: true
-              Invert Rainbow: false
-              Max Color: 255; 255; 255
-              Min Color: 0; 0; 0
-              Name: Viewpoints
-              Position Transformer: XYZ
-              Queue Size: 10
-              Selectable: true
-              Size (Pixels): 3
-              Size (m): 0.20000000298023224
-              Style: Spheres
-              Topic: /drone_0_ego_planner_node/viewpoints
-              Unreliable: false
-              Use Fixed Frame: true
-              Use rainbow: true
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/viewpoints_yaw
-              Name: Viewpoint_Yaw
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/viewpoints_line
-              Name: Viewpoints_Line
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Alpha: 1
-              Autocompute Intensity Bounds: true
-              Autocompute Value Bounds:
-                Max Value: 10
-                Min Value: -10
-                Value: true
-              Axis: Z
-              Channel Name: intensity
-              Class: rviz/PointCloud2
-              Color: 237; 212; 0
-              Color Transformer: FlatColor
-              Decay Time: 0
-              Enabled: true
-              Invert Rainbow: false
-              Max Color: 255; 255; 255
-              Min Color: 0; 0; 0
-              Name: path_to_goal
-              Position Transformer: XYZ
-              Queue Size: 10
-              Selectable: true
-              Size (Pixels): 3
-              Size (m): 0.5
-              Style: Flat Squares
-              Topic: /drone_0_ego_planner_node/path_next_goal_pt
-              Unreliable: false
-              Use Fixed Frame: true
-              Use rainbow: true
-              Value: true
-            - Class: rviz/Marker
-              Enabled: false
-              Marker Topic: /drone_0_ego_planner_node/topo_blacklist
-              Name: topo_blacklist
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: false
-            - Class: rviz/Marker
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/far_goal_local
-              Name: Local_goal
-              Namespaces:
-                {}
+                scene_graph_obj_level: true
+                scene_graph_room_label_text: true
+                scene_graph_room_level: true
+                scene_graph_room_top_edge: true
+                scene_graph_top_level: true
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
               Marker Topic: /drone_0_ego_planner_node/planning/fsm_path
-              Name: GlobalPath
+              Name: TopoPath
               Namespaces:
-                {}
+                global_path: true
               Queue Size: 100
               Value: true
-          Enabled: false
-          Name: Explore
+          Enabled: true
+          Name: SceneGraph
         - Class: rviz/Group
           Displays:
             - Class: rviz/Marker
@@ -1012,150 +905,6 @@ Visualization Manager:
               Value: false
           Enabled: true
           Name: Simulation
-        - Class: rviz/Group
-          Displays:
-            - Class: rviz/MarkerArray
-              Enabled: false
-              Marker Topic: /drone_0_ego_planner_node/rc_ctrl_marker
-              Name: rc_ctrl_info
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: false
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/skeleton_vis
-              Name: skeletonInfo
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /object_all_vis
-              Name: ObjectAllVis
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: false
-              Marker Topic: /object_update_vis
-              Name: ObjectUpdateVis
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: false
-            - Alpha: 1
-              Autocompute Intensity Bounds: true
-              Autocompute Value Bounds:
-                Max Value: 1.127821683883667
-                Min Value: -0.01364278793334961
-                Value: true
-              Axis: Z
-              Channel Name: intensity
-              Class: rviz/PointCloud2
-              Color: 255; 255; 255
-              Color Transformer: RGB8
-              Decay Time: 0
-              Enabled: false
-              Invert Rainbow: false
-              Max Color: 255; 255; 255
-              Min Color: 0; 0; 0
-              Name: ObjectPtCloud
-              Position Transformer: XYZ
-              Queue Size: 10
-              Selectable: true
-              Size (Pixels): 3
-              Size (m): 0.009999999776482582
-              Style: Points
-              Topic: /object_update_pointcloud
-              Unreliable: false
-              Use Fixed Frame: true
-              Use rainbow: true
-              Value: false
-            - Alpha: 1
-              Autocompute Intensity Bounds: true
-              Autocompute Value Bounds:
-                Max Value: 10
-                Min Value: -10
-                Value: true
-              Axis: Z
-              Channel Name: intensity
-              Class: rviz/PointCloud2
-              Color: 255; 255; 255
-              Color Transformer: RGB8
-              Decay Time: 0
-              Enabled: false
-              Invert Rainbow: false
-              Max Color: 255; 255; 255
-              Min Color: 0; 0; 0
-              Name: AllObjPtCloud
-              Position Transformer: XYZ
-              Queue Size: 10
-              Selectable: true
-              Size (Pixels): 1.5
-              Size (m): 0.014999999664723873
-              Style: Points
-              Topic: /object_pointcloud
-              Unreliable: false
-              Use Fixed Frame: true
-              Use rainbow: true
-              Value: false
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /skeleton/cluster_vis
-              Name: SkeletonCluster
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /skeleton/edge_weight_vis
-              Name: SkeletonEdgeWeights
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /scene_graph/vis
-              Name: SceneGraph
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/planning/fsm_path
-              Name: TopoPath
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-          Enabled: true
-          Name: Skeleton&Obj
-        - Class: rviz/Group
-          Displays:
-            - Class: rviz/MarkerArray
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/all_viewpoints_yaw
-              Name: all_VP
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-            - Class: rviz/Marker
-              Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/vp_global_path
-              Name: VP_global_tour
-              Namespaces:
-                {}
-              Queue Size: 100
-              Value: true
-          Enabled: false
-          Name: VP_explore
       Enabled: true
       Name: drone0
     - Class: rviz/Group
@@ -1164,22 +913,6 @@ Visualization Manager:
           Enabled: false
           Marker Topic: /bridge/drone_0_ego_planner_node/planning/fsm_vis
           Name: drone0fsm
-          Namespaces:
-            {}
-          Queue Size: 100
-          Value: false
-        - Class: rviz/Marker
-          Enabled: false
-          Marker Topic: /bridge/drone_1_ego_planner_node/planning/fsm_vis
-          Name: drone1fsm
-          Namespaces:
-            {}
-          Queue Size: 100
-          Value: false
-        - Class: rviz/Marker
-          Enabled: false
-          Marker Topic: /bridge/drone_2_ego_planner_node/planning/fsm_vis
-          Name: drone2fsm
           Namespaces:
             {}
           Queue Size: 100
@@ -1203,7 +936,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 20.65923500061035
+      Distance: 18.619775772094727
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1211,17 +944,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 1.7368268966674805
-        Y: -2.9288415908813477
+        X: -3.0312862396240234
+        Y: -8.137960433959961
         Z: -4.231929779052734e-06
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9997974634170532
+      Pitch: 0.769797682762146
       Target Frame: body
-      Yaw: 3.5354368686676025
+      Yaw: 3.4204375743865967
     Saved:
       - Class: rviz/XYOrbit
         Distance: 15.792802810668945
