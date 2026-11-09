@@ -771,8 +771,6 @@ Visualization Manager:
               Namespaces:
                 edges: true
                 poly_belongs_to_area: true
-                polyhedron_center: true
-                polyhedron_orin_center: true
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
@@ -936,7 +934,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 18.619775772094727
+      Distance: 26.15944480895996
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -952,7 +950,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.769797682762146
+      Pitch: 0.8597975969314575
       Target Frame: body
       Yaw: 3.4204375743865967
     Saved:
