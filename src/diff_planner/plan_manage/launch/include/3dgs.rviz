@@ -93,24 +93,6 @@ Visualization Manager:
       Reference Frame: world
       Show Trail: false
       Value: true
-    - Alpha: 1
-      Cell Size: 5
-      Class: rviz/Grid
-      Color: 0; 0; 0
-      Enabled: true
-      Line Style:
-        Line Width: 0.029999999329447746
-        Value: Lines
-      Name: Grid
-      Normal Cell Count: 0
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Plane: XY
-      Plane Cell Count: 1000
-      Reference Frame: <Fixed Frame>
-      Value: true
     - Alpha: 0.6000000238418579
       Cell Size: 1
       Class: rviz/Grid
@@ -129,6 +111,24 @@ Visualization Manager:
       Plane Cell Count: 1000
       Reference Frame: <Fixed Frame>
       Value: false
+    - Alpha: 1
+      Cell Size: 5
+      Class: rviz/Grid
+      Color: 0; 0; 0
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 1000
+      Reference Frame: <Fixed Frame>
+      Value: true
     - Class: rviz/Group
       Displays:
         - Class: rviz/Group
@@ -476,7 +476,7 @@ Visualization Manager:
               Autocompute Intensity Bounds: true
               Autocompute Value Bounds:
                 Max Value: 1.9500000476837158
-                Min Value: -0.25
+                Min Value: -0.3499999940395355
                 Value: true
               Axis: Z
               Channel Name: intensity
@@ -766,8 +766,8 @@ Visualization Manager:
           Displays:
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/skeleton_vis
-              Name: skeletonInfo
+              Marker Topic: /scene_graph/skeleton
+              Name: Skeleton
               Namespaces:
                 edges: true
                 poly_belongs_to_area: true
@@ -775,8 +775,8 @@ Visualization Manager:
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /object_all_vis
-              Name: ObjectAllVis
+              Marker Topic: /scene_graph/objects
+              Name: Objects
               Namespaces:
                 obb_corners: true
                 obj_edge_all: true
@@ -786,8 +786,8 @@ Visualization Manager:
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /skeleton/cluster_vis
-              Name: SkeletonCluster
+              Marker Topic: /scene_graph/clusters
+              Name: Clusters
               Namespaces:
                 clusters_box: true
                 clusters_sphere: true
@@ -795,8 +795,8 @@ Visualization Manager:
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /scene_graph/vis
-              Name: SceneGraph
+              Marker Topic: /scene_graph/graph
+              Name: Graph
               Namespaces:
                 scene_graph_obj_level: true
                 scene_graph_room_label_text: true
@@ -807,8 +807,8 @@ Visualization Manager:
               Value: true
             - Class: rviz/MarkerArray
               Enabled: true
-              Marker Topic: /drone_0_ego_planner_node/planning/fsm_path
-              Name: TopoPath
+              Marker Topic: /scene_graph/path
+              Name: Path
               Namespaces:
                 global_path: true
               Queue Size: 100
@@ -934,7 +934,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 26.15944480895996
+      Distance: 28.683149337768555
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -942,17 +942,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -3.0312862396240234
-        Y: -8.137960433959961
-        Z: -4.231929779052734e-06
+        X: -3.6448230743408203
+        Y: -10.912854194641113
+        Z: -1.3709068298339844e-06
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8597975969314575
+      Pitch: 0.8997975587844849
       Target Frame: body
-      Yaw: 3.4204375743865967
+      Yaw: 3.565441131591797
     Saved:
       - Class: rviz/XYOrbit
         Distance: 15.792802810668945
